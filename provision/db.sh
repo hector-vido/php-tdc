@@ -19,9 +19,6 @@ fi
 rm -rf /etc/apt/sources.list.d/mysql.list
 apt-get update && apt-get install -y gnupg vim
 
-#apt-get install -y mariadb-server
-#exit
-
 # Adiciona chave e repositório
 wget -q -O - https://dev.mysql.com/doc/refman/8.0/en/checking-gpg-signature.html | grep -zEo -- '-----BEGIN.*BLOCK-----' | apt-key add -
 cat > /etc/apt/sources.list.d/mysql.list <<EOF
@@ -33,14 +30,14 @@ apt-get update
 # Ajusta para instalação não assistida
 debconf-set-selections <<< 'mysql-community-server mysql-community-server/root-pass password 4linux'
 debconf-set-selections <<< 'mysql-community-server mysql-community-server/re-root-pass password 4linux'
-DEBIAN_FRONTEND='noninteractive' apt-get install -y mysql-community-server mysql-shell mysql-router
+DEBIAN_FRONTEND='noninteractive' apt-get install -y mysql-community-server
 
 # Configura o client
 echo -e '[client]\nuser=root\npassword=4linux' > /root/.my.cnf
 mysql -u root -p4linux -e "ALTER USER root@localhost IDENTIFIED WITH mysql_native_password BY '4linux'" > /dev/null
 
-if [ "$(grep report_host /etc/mysql/mysql.conf.d/mysqld.cnf)" == "" ]; then
-  echo "report_host = $(ip a | grep -Eo '172.27.11.[0-9]{2}' | grep -v 25)" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+if [ "$(grep server-id /etc/mysql/mysql.conf.d/mysqld.cnf)" == "" ]; then
+  echo "server-id = $RANDOM" >> /etc/mysql/mysql.conf.d/mysqld.cnf
   echo 'innodb_api_enable_binlog = 1' >> /etc/mysql/mysql.conf.d/mysqld.cnf
 fi
 systemctl restart mysql

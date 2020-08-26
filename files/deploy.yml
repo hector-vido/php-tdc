@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: php
+  name: php
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php
+  template:
+    metadata:
+      labels:
+        app: php
+    spec:
+      containers:
+      - image: hectorvido/php-ms
+        name: php
+        env:
+        - name: DB_HOST
+          value: '172.27.11.11'
+        - name: DB_PORT
+          value: '3306'
+        - name: DB_USER
+          value: 'tdc'
+        - name: DB_PASS
+          value: '4linux'
+        - name: DB_NAME
+          value: 'tdc'
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: php-ini
+          mountPath: /app/files
+          readOnly: true
+        imagePullPolicy: Always
+      volumes:
+      - name: php-ini
+        configMap:
+          name: php-ini
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: php
+  name: php
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: php
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: php
+  labels:
+    app: php
+spec:
+  rules:
+  - host: tdc.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          serviceName: php
+          servicePort: 8080
