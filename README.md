@@ -1,5 +1,32 @@
 # PHP e MySQL - HA
 
+Para provisionar as máquinas utilizadas no TDC será preciso instalar o [Vagrant](https://www.vagrantup.com/) e algum hypervisor como por exemplo o [Virtualbox](https://www.virtualbox.org/).
+
+Clone o repositório, entre no diretório e inicie o provisionamento:
+
+```bash
+git clone https://github.com/hector-vido/php-tdc.git
+cd php-tdc
+vagrant up
+```
+
+Na primeira execução, uma imagem do Debian (conhecida como box) será baixada e então as máquinas passarão a ser criadas e então a instalação começará.
+
+## Manipulando as máquinas
+
+Para visualizar as máquinas basta executar:
+
+  vagrant status
+
+Para acessar qualquer uma das máquinas basta executar:
+
+  vagrant ssh master
+
+Para ligar e desligar as máquinas:
+
+  vagrant up
+  vagrant halt
+
 ## MySQL
 
 ### db1
