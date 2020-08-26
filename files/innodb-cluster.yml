@@ -8,6 +8,8 @@ spec:
   ports:
   - port: 3306
     name: mysql
+  - port: 33060
+    name: mysqlx
   - port: 33061
     name: group-replication
   - port: 11211
@@ -39,6 +41,7 @@ spec:
         - "--report-host=$(POD_NAME).mysql.default"
         ports:
         - containerPort: 3306
+        - containerPort: 33060
         - containerPort: 33061
         - containerPort: 11211
         volumeMounts:

@@ -2,9 +2,12 @@
 # vi: set ft=ruby :
 
 vms = {
-  'db1' => {'memory' => '2048', 'cpus' => 2, 'ip' => '100', 'provision' => 'db.sh'},
-  'db2' => {'memory' => '2048', 'cpus' => 2, 'ip' => '200', 'provision' => 'db.sh'},
-  'php' => {'memory' => '1024', 'cpus' => 1, 'ip' => '10', 'provision' => 'php.sh'},
+  'db1' => {'memory' => '1024', 'cpus' => 1, 'ip' => '11', 'provision' => 'db.sh'},
+  'db2' => {'memory' => '1024', 'cpus' => 1, 'ip' => '22', 'provision' => 'db.sh'},
+  'db3' => {'memory' => '1024', 'cpus' => 1, 'ip' => '33', 'provision' => 'db.sh'},
+  'master' => {'memory' => '1024', 'cpus' => 2, 'ip' => '10', 'provision' => 'master.sh'},
+  'node1' => {'memory' => '1024', 'cpus' => 1, 'ip' => '20', 'provision' => 'node.sh'},
+  'node2' => {'memory' => '1024', 'cpus' => 1, 'ip' => '30', 'provision' => 'node.sh'}
 }
 
 Vagrant.configure('2') do |config|

@@ -39,3 +39,12 @@ MASTER_LOG_POS=4;
 
 INSTALL PLUGIN daemon_memcached SONAME "libmemcached.so";
 ```
+
+## PHP
+
+A instalação do módulo no PHP é um pouco mais complicada:
+
+```bash
+apt-get update
+apt-get install -y php-dev php-pear libmemcached-dev
+```
