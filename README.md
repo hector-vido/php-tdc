@@ -2,14 +2,7 @@
 
 ## MySQL
 
-### db1
-
-Estes passos devem ser executados na máquina **db1**.
-
 ```sql
-CREATE USER 'replicator'@'172.27.11.200' IDENTIFIED WITH mysql_native_password BY '4linux';
-GRANT REPLICATION SLAVE ON *.* TO 'replicator'@'172.27.11.200';
-
 CREATE DATABASE tdc;
 CREATE USER tdc@'%' IDENTIFIED WITH mysql_native_password BY '4linux';
 GRANT ALL ON tdc.* TO tdc@'%';
@@ -23,28 +16,4 @@ mysql -u root -p4linux < /vagrant/files/innodb_memcached_config.sql
 
 ```sql
 INSTALL PLUGIN daemon_memcached SONAME "libmemcached.so";
-```
-
-### db2
-
-Estes passos devem ser executados na máquina **db2**.
-
-```sql
-CHANGE MASTER TO
-MASTER_HOST='172.27.11.100',
-MASTER_USER='replicator',
-MASTER_PASSWORD='4linux',
-MASTER_LOG_FILE='binlog.000001',
-MASTER_LOG_POS=4;
-
-INSTALL PLUGIN daemon_memcached SONAME "libmemcached.so";
-```
-
-## PHP
-
-A instalação do módulo no PHP é um pouco mais complicada:
-
-```bash
-apt-get update
-apt-get install -y php-dev php-pear libmemcached-dev
 ```
