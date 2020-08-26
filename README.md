@@ -16,16 +16,22 @@ Na primeira execução, uma imagem do Debian (conhecida como box) será baixada 
 
 Para visualizar as máquinas basta executar:
 
-  vagrant status
+```bash
+vagrant status
+```
 
 Para acessar qualquer uma das máquinas basta executar:
 
-  vagrant ssh master
+```bash
+vagrant ssh master
+```
 
 Para ligar e desligar as máquinas:
 
-  vagrant up
-  vagrant halt
+```bash
+vagrant up
+vagrant halt
+```
 
 ## MySQL
 
@@ -63,4 +69,25 @@ MASTER_LOG_POS=4;
 START SLAVE;
 
 INSTALL PLUGIN daemon_memcached SONAME "libmemcached.so";
-``` 
+```
+
+## PHP
+
+A imagem utilizada chama-se [hectorvido/php-ms](https://hub.docker.com/r/hectorvido/php-ms) e foi criada com base no código do repositório [https://github.com/hector-vido/php-ms](https://github.com/hector-vido/php-ms).
+
+Um Dockerfile de exemplo está disponível em `files/Dockerfile` e as variáveis de ambiente necessárias estão escritas em `files/deploy.yml`.
+
+## Kubernetes
+
+Para criar o arquivo de configuração utilizado pelo `deploy.yml` basta executar a partir da máquina **master**:
+
+```bash
+kubectl create cm php-ini --from-file /vagrant/files/php.ini
+```
+
+Caso deseje instalar algum tipo de ingress, o utilizado durante a apresentação é aquele baseado em [HAProxy](https://haproxy-ingress.github.io/):
+
+```bash
+kubectl create -f https://haproxy-ingress.github.io/resources/haproxy-ingress.yaml
+kubectl label node master role=ingress-controller
+```
