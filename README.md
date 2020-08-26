@@ -1,5 +1,15 @@
 # PHP e MySQL - HA
 
+Este repositório faz parte da infraestrutura utilizada na palestra de PHP no TDC do dia 26 de Agosto de 2020.
+
+O objetivo era demonstrar a facilidade com que podemos configurar aplicações PHP com alta disponibilidade utilizando os recursos certos tanto na criação da imagem como no provisionamento da aplicação dentro do Kubernetes.
+
+Ainda foi apresentado o plugin do [memcached](https://www.memcached.org/) para o MySQL que nos permite persistir as sessões através de reinicializações e inclusive replicá-las para um banco secundário, garantindo uma maior resiliência destes dados.
+
+Ao final da palestra o servidor primário do MySQL foi desativado, simulando um problema de infraestrutura, e o secundário foi promovido para primário recuperando as sessões sem causar maiores danos.
+
+## Começando
+
 Para provisionar as máquinas utilizadas no TDC será preciso instalar o [Vagrant](https://www.vagrantup.com/) e algum hypervisor como por exemplo o [Virtualbox](https://www.virtualbox.org/).
 
 Clone o repositório, entre no diretório e inicie o provisionamento:
@@ -10,9 +20,9 @@ cd php-tdc
 vagrant up
 ```
 
-Na primeira execução, uma imagem do Debian (conhecida como box) será baixada e então as máquinas passarão a ser criadas e então a instalação começará.
+Na primeira execução, uma imagem do Debian (conhecida como box) será baixada, as máquinas passarão a ser criadas e então a instalação começará.
 
-## Manipulando as máquinas
+### Manipulando as máquinas
 
 Para visualizar as máquinas basta executar:
 
